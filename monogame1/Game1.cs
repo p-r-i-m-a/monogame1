@@ -9,6 +9,8 @@ namespace monogame1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        Texture2D murphTexture;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -20,12 +22,18 @@ namespace monogame1
         {
             // TODO: Add your initialization logic here
 
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 500;
+            _graphics.ApplyChanges();
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            murphTexture = Content.Load<Texture2D>("murph");
 
             // TODO: use this.Content to load your game content here
         }
@@ -43,6 +51,13 @@ namespace monogame1
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            _spriteBatch.Begin();
+
+            _spriteBatch.Draw(murphTexture, new Vector2(100, 100), Color.White );
+
+            _spriteBatch.End();
+
 
             // TODO: Add your drawing code here
 
