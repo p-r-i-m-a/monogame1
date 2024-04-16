@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace monogame1
 {
@@ -9,13 +10,21 @@ namespace monogame1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        Texture2D murphTexture;
+        Texture2D dinoDestroy, building, beam, choppa, background;
+
+        public int x, y;
+        Random generator = new Random();
+
+
+       
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+
         }
 
         protected override void Initialize()
@@ -23,8 +32,12 @@ namespace monogame1
             // TODO: Add your initialization logic here
 
             _graphics.PreferredBackBufferWidth = 800;
-            _graphics.PreferredBackBufferHeight = 500;
+            _graphics.PreferredBackBufferHeight = 800;
             _graphics.ApplyChanges();
+
+            x = generator.Next(20, 600);
+            y = generator.Next(20, 600);
+
 
             base.Initialize();
         }
@@ -33,7 +46,20 @@ namespace monogame1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            murphTexture = Content.Load<Texture2D>("murph");
+            if (x <= 310)
+            {
+                background = Content.Load<Texture2D>("cityBurn");
+            }
+            else
+            {
+                background = Content.Load<Texture2D>("burnCity");
+            }
+
+            dinoDestroy = Content.Load<Texture2D>("dino");
+            building = Content.Load<Texture2D>("building");
+            choppa = Content.Load<Texture2D>("choppa");
+            beam = Content.Load<Texture2D>("red beam");
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -50,11 +76,19 @@ namespace monogame1
 
         protected override void Draw(GameTime gameTime)
         {
+
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(murphTexture, new Vector2(100, 100), Color.White );
+            _spriteBatch.Draw(background, new Vector2(0,0), Color.White);
+            _spriteBatch.Draw(dinoDestroy, new Vector2(1, 500), Color.White );
+            _spriteBatch.Draw(building, new Vector2(500, 1), Color.White);
+            _spriteBatch.Draw(beam, new Vector2(120, 563), Color.White);
+            _spriteBatch.Draw(choppa, new Vector2(x, y), Color.White);
+
+
 
             _spriteBatch.End();
 
